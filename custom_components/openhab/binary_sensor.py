@@ -19,7 +19,7 @@ async def async_setup_entry(
     async_add_devices(
         OpenHABBinarySensor(hass, coordinator, item)
         for item in coordinator.data.values()
-        if item.type_ in ITEMS_MAP[BINARY_SENSOR]
+        if (item.type_ex == 'devireg_attr_ui_binary_sensor') or ( (item.type_ex == False) and (item.type_ in ITEMS_MAP[BINARY_SENSOR]))
     )
 
 
@@ -31,4 +31,4 @@ class OpenHABBinarySensor(OpenHABEntity, BinarySensorEntity):
     @property
     def is_on(self) -> bool:
         """Return true if the binary_sensor is on."""
-        return self.item._state == "OPEN"
+        return (self.item._state == "OPEN") or (self.item._state == "ON")

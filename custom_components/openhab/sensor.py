@@ -21,7 +21,7 @@ async def async_setup_entry(
     async_add_entities(
         OpenHABSensor(hass, coordinator, item)
         for item in coordinator.data.values()
-        if item.type_ in ITEMS_MAP[SENSOR]
+        if (item.type_ex == 'devireg_attr_ui_sensor') or ( (item.type_ex == False) and (item.type_ in ITEMS_MAP[SENSOR]))
     )
 
 

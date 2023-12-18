@@ -21,7 +21,8 @@ LIGHT = "light"
 MEDIA_PLAYER = "media_player"
 SENSOR = "sensor"
 SWITCH = "switch"
-PLATFORMS = [BINARY_SENSOR, COVER, DEVICE_TRACKER, LIGHT, MEDIA_PLAYER, SENSOR, SWITCH]
+CLIMATE = "climate"
+PLATFORMS = [BINARY_SENSOR, COVER, DEVICE_TRACKER, LIGHT, MEDIA_PLAYER, SENSOR, SWITCH, CLIMATE]
 
 
 # Configuration and options
@@ -31,7 +32,7 @@ CONF_AUTH_TYPE = "auth_type"
 CONF_USERNAME = "username"
 CONF_PASSWORD = "password"
 CONF_AUTH_TOKEN = "auth_token"
-CONF_AUTH_TYPE_BASIC = "basic"
+CONF_AUTH_TYPE_BASIC = "OAuth2"
 CONF_AUTH_TYPE_TOKEN = "token"
 
 AUTH_TYPES = [CONF_AUTH_TYPE_BASIC, CONF_AUTH_TYPE_TOKEN]
@@ -59,6 +60,7 @@ ITEMS_MAP = {
         "String",
     ],
     SWITCH: ["Switch"],
+    CLIMATE: ["Climate"]
 }
 
 STARTUP_MESSAGE = f"""

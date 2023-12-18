@@ -1,16 +1,18 @@
 {
   "domain": "openhab",
   "name": "openHAB",
-  "documentation": "https://github.com/kubawolanin/ha-openhab",
+  "documentation": "https://github.com/bob-tm/ha-openhab",
   "iot_class": "local_polling",
-  "issue_tracker": "https://github.com/kubawolanin/ha-openhab/issues",
+  "issue_tracker": "https://github.com/bob-tm/ha-openhab/issues",
   "requirements": [
     "zeroconf",
-    "python-openhab==2.16.2"
+    "bs4",
+    "python-openhab"
   ],
-  "version": "0.0.1",
+  "version": "0.2",
   "config_flow": true,
   "codeowners": [
-    "@kubawolanin"
+    "@kubawolanin",
+    "@bob-tm"
   ]
 }

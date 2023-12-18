@@ -20,10 +20,11 @@ async def async_setup_entry(
 ) -> None:
     """Setup sensor platform."""
     coordinator = hass.data[DOMAIN][entry.entry_id]
+
     async_add_devices(
         OpenHABBinarySwitch(hass, coordinator, item)
         for item in coordinator.data.values()
-        if item.type_ in ITEMS_MAP[SWITCH]
+        if (item.type_ex == 'devireg_attr_ui_switch') or ( (item.type_ex == False) and (item.type_ in ITEMS_MAP[SWITCH]))
     )
 
 

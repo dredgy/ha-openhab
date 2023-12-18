@@ -67,14 +67,21 @@ class OpenHABEntity(CoordinatorEntity):
         oh_version = self.coordinator.version
         if oh_version is not None:
             version = oh_version
-        return DeviceInfo(
-            identifiers={(DOMAIN, self._host)},
-            name=f"{NAME} - {self._host}",
-            model=version,
-            manufacturer=NAME,
-            configuration_url=self._base_url,
-            entry_type=DeviceEntryType.SERVICE,
-        )
+
+        if self.item.type_ex in ['devireg_attr', 'devireg_attr_ui_sensor', 'devireg_attr_ui_binary_sensor', 'devireg_attr_ui_switch']:
+            devi_unit = self.item.groupNames[0]
+            return DeviceInfo(
+                identifiers   = {(f"{DOMAIN}_{devi_unit}", self._host)}
+            )
+        else:
+            return DeviceInfo(
+                identifiers={(DOMAIN, self._host)},
+                name=f"{NAME} - {self._host}",
+                model=version,
+                manufacturer=NAME,
+                configuration_url=self._base_url,
+                entry_type=DeviceEntryType.SERVICE,
+            )
 
     @property
     def device_class(self):
@@ -128,8 +135,8 @@ class OpenHABEntity(CoordinatorEntity):
             "unit_of_measure": str(self.item.unit_of_measure),
         }
 
-        if is_group and len(self.item.members):
-            attributes["members"] = self.item.members.keys()
+        #if is_group and len(self.item.members):
+        #    attributes["members"] = self.item.members.keys()
 
         if self.item.quantityType is not None:
             attributes["quantity_type"] = self.item.quantityType

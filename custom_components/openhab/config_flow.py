@@ -55,7 +55,7 @@ class OpenHABFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                     ): str,
                     vol.Required(
                         CONF_AUTH_TYPE,
-                        default=user_input.get(CONF_AUTH_TYPE, CONF_AUTH_TYPE_TOKEN),
+                        default=user_input.get(CONF_AUTH_TYPE, CONF_AUTH_TYPE_BASIC),
                     ): vol.In(AUTH_TYPES),
                 }
             ),
@@ -69,7 +69,7 @@ class OpenHABFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         """Handle a flow initialized by the user."""
         errors = {}
 
-        user_input[CONF_BASE_URL] = self.data[CONF_BASE_URL]
+        user_input[CONF_BASE_URL] = self.data[CONF_BASE_URL].rstrip('/')
         user_input[CONF_AUTH_TYPE] = self.data[CONF_AUTH_TYPE]
 
         if user_input is not None and (
@@ -129,8 +129,10 @@ class OpenHABFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         """Return true if credentials is valid."""
         try:
             client = OpenHABApiClient(
-                self.hass, base_url, auth_type, auth_token, username, password
+                self.hass, base_url, auth_type, auth_token, username, password, True
             )  # pylint: disable=broad-except
+            x = await client.async_get_auth2_token()
+            client.CreateOpenHab()
             await client.async_get_version()
             return True
         except Exception as error:  # pylint: disable=broad-except

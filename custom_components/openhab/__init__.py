@@ -39,6 +39,12 @@ async def async_setup_entry(
         password=entry.data.get(CONF_PASSWORD, ""),
     )
 
+    if api_client.openhab==False:
+        LOGGER.info("OpenHab Recreating Oauth2 Token")
+        api_client._creating_token = True
+        await api_client.async_get_auth2_token()
+        api_client.CreateOpenHab()
+
     coordinator = OpenHABDataUpdateCoordinator(hass, api=api_client)
     await coordinator.async_config_entry_first_refresh()
 
