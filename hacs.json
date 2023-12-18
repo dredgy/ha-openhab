@@ -1,10 +1,11 @@
 {
     "name": "openHAB",
-    "hacs": "0.0.1",
+    "hacs": "0.2",
     "domains": [
         "binary_sensor",
         "sensor",
-        "switch"
+        "switch",
+        "climate"
     ],
     "homeassistant": "2021.9.0"
 }
