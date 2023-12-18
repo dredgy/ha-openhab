@@ -17,27 +17,22 @@ _Component to integrate with [openHAB][openHAB]._
 
 | Platform         | Item types                     |
 | ---------------- | ------------------------------ |
+| `climate`        | `Devireg thermostat`           |
 | `binary_sensor`  | `Contact`                      |
 | `sensor`         | `String`, `Number`, `DateTime` |
 | `switch`         | `Switch`                       |
 | `cover`          | `Rollershutter`                |
 | `device_tracker` | `Location`                     |
 
-In the future this integration will also support the following platforms:
-
-| Platform       | Item types        |
-| -------------- | ----------------- |
-| `light`        | `Color`, `Dimmer` |
-| `camera`       | `Image`           |
-| `media_player` | `Player`          |
 
 ## HACS Installation
 
 1. Go to http://homeassistant.local:8123/hacs/integrations
-1. Add `https://github.com/kubawolanin/ha-openhab` custom integration repository
+1. Add `https://github.com/bob-tm/ha-openhab` custom integration repository
 1. Download the openHAB repository
 1. Go to http://homeassistant.local:8123/config/integrations and add new integration
 1. Choose "openHAB" from the list and follow the config flow steps
+1. Use oauth2 for Devireg (more properties and correct floor / air temperature display)
 
 ## Manual Installation
 
