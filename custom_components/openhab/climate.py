@@ -61,7 +61,7 @@ class OpenHABClimate(OpenHABEntity, ClimateEntity):
 
         if self.item.devireg['thing']:
             return DeviceInfo(
-                identifiers={(f"{DOMAIN}_{self.item.devireg['name_id']}", self._host)},
+                identifiers={(f"{DOMAIN}.{self.item.devireg['name_id']}", self._host)},
                 name =self.item.devireg['thing']['label'],
                 model         = self.item.devireg['thing']['properties']['regulationType'],
                 manufacturer  = 'Devireg',
@@ -71,7 +71,7 @@ class OpenHABClimate(OpenHABEntity, ClimateEntity):
             )
         else:
             return DeviceInfo(
-                identifiers={(f"{DOMAIN}_{self.item.devireg['name_id']}", self._host)},
+                identifiers={(f"{DOMAIN}.{self.item.devireg['name_id']}", self._host)},
                 name = self.item.label,
                 model=version,
                 manufacturer  = 'Devireg',

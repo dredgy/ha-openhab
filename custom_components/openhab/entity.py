@@ -40,8 +40,10 @@ class OpenHABEntity(CoordinatorEntity):
             self._base_url = ""
         self._base_url = self.coordinator.api._base_url
         self._host = strip_ip(self._base_url)
+        #self._nameid_prefix = f"{self._host}_"
+        self._nameid_prefix = f"devi_"
 
-        self.entity_id = f"{DOMAIN}_{self._host}_{self.item.name}"
+        self.entity_id = f"{DOMAIN}.{self._nameid_prefix}{self.item.name}"
 
         if self.item.unit_of_measure:
             self._attr_native_unit_of_measurement = str(self.item.unit_of_measure)
@@ -59,7 +61,7 @@ class OpenHABEntity(CoordinatorEntity):
     @property
     def unique_id(self) -> str | None:
         """Return a unique ID to use for this entity."""
-        return f"{DOMAIN}_{self._host}_{self.item.name}"
+        return f"{DOMAIN}.{self._nameid_prefix}{self.item.name}"
 
     @property
     def device_info(self) -> DeviceInfo:
@@ -71,7 +73,7 @@ class OpenHABEntity(CoordinatorEntity):
         if self.item.type_ex in ['devireg_attr', 'devireg_attr_ui_sensor', 'devireg_attr_ui_binary_sensor', 'devireg_attr_ui_switch']:
             devi_unit = self.item.groupNames[0]
             return DeviceInfo(
-                identifiers   = {(f"{DOMAIN}_{devi_unit}", self._host)}
+                identifiers   = {(f"{DOMAIN}.{devi_unit}")}
             )
         else:
             return DeviceInfo(
