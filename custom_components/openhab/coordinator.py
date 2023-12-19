@@ -22,6 +22,7 @@ class OpenHABDataUpdateCoordinator(DataUpdateCoordinator):
         self.platforms: list[str] = []
         self.version: str = ""
         self.is_online = False
+        self.ha_items  = {}
 
         super().__init__(
             hass,

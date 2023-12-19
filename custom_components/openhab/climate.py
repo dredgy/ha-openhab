@@ -53,6 +53,15 @@ class OpenHABClimate(OpenHABEntity, ClimateEntity):
     _attr_device_class_map = []
 
     @property
+    def available(self):
+        """Return True if entity is available."""
+        if self.item.devireg['thing']:
+            is_online = self.item.devireg['thing']['statusInfo']['status']=='ONLINE'
+            return is_online
+
+        return self.coordinator.is_online
+
+    @property
     def device_info(self) -> DeviceInfo:
         version = VERSION
         oh_version = self.coordinator.version

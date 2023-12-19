@@ -35,6 +35,7 @@ class OpenHABEntity(CoordinatorEntity):
         self.hass = hass
         self.item = item
         self._id = item.name
+        self.coordinator.ha_items[self.item.name] = self
 
         if not self.coordinator.api:
             self._base_url = ""
@@ -51,6 +52,10 @@ class OpenHABEntity(CoordinatorEntity):
     @property
     def available(self):
         """Return True if entity is available."""
+        if self.item.parent_device_name:
+            if self.item.parent_device_name in self.coordinator.ha_items:
+                return  self.coordinator.ha_items[self.item.parent_device_name].available
+
         return self.coordinator.is_online
 
     @property
@@ -148,7 +153,11 @@ class OpenHABEntity(CoordinatorEntity):
     @callback
     def _handle_coordinator_update(self) -> None:
         """Handle updated data from the coordinator."""
-        self.item = self.coordinator.data.get(self._id)
+        new = self.coordinator.data.get(self._id)
+
+        if new != None:
+            self.item = new
+
         self.async_write_ha_state()
 
     async def async_added_to_hass(self) -> None:

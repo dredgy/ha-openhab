@@ -7,7 +7,6 @@ import os
 import aiohttp
 import pathlib
 import json
-import asyncio
 
 from .utils import strip_ip
 
@@ -72,6 +71,12 @@ def isDeviDevice(k, devi_things):
         return k.find('DeviReg')==0
 
 def fetch_all_items_new(oh):
+    try:
+        return fetch_all_items(oh)
+    except:
+        return {}
+
+def fetch_all_items(oh):
     import json
 
     dr = {}
@@ -81,6 +86,7 @@ def fetch_all_items_new(oh):
     for k,v in items.items():
         n = type(v).__name__
         v.type_ex = False
+        v.parent_device_name = False
 
         if n=='GroupItem' and isDeviDevice(k, devi_things):
             x = oh.get_item(k)
@@ -98,6 +104,7 @@ def fetch_all_items_new(oh):
         if len(v.groupNames)>0:
             if v.groupNames[0] in dr:
                 is_devi_attr = True
+                v.parent_device_name = v.groupNames[0]
 
                 if v.label in [
                         'State',  'Mode', 'Room temperature', 'Floor temperature',
@@ -162,7 +169,7 @@ def fetch_all_items_new(oh):
                 'name_id': k
             }
 
-    return dr
+    return dict(sorted(dr.items()))
 
 class ApiClientException(Exception):
     """Api Client Exception."""
@@ -182,6 +189,8 @@ class OpenHABApiClient:
             'token_cache': str(self.oauth2_token_cache)
         }
 
+        timeout = 10
+
         # try OAuth2 with just name and pswd
         if self._auth_type == CONF_AUTH_TYPE_BASIC and self.auth2 and len(self._username)>0:
             if self._creating_token:
@@ -199,17 +208,17 @@ class OpenHABApiClient:
                 with self.oauth2_token_cache.open('r') as fhdl:
                     oauth2_config['token'] = json.load(fhdl)
 
-            self.openhab = OpenHAB(base_url=self._rest_url, oauth2_config=oauth2_config)
+            self.openhab = OpenHAB(base_url=self._rest_url, oauth2_config=oauth2_config, timeout=timeout)
         else:
             if self._auth_type == CONF_AUTH_TYPE_TOKEN and self._auth_token is not None:
                 API_HEADERS["X-OPENHAB-TOKEN"] = self._auth_token
-                self.openhab = OpenHAB(self._rest_url)
+                self.openhab = OpenHAB(self._rest_url, timeout=timeout)
 
             if self._auth_type == CONF_AUTH_TYPE_BASIC:
                 if self._username is not None and len(self._username) > 0:
-                    self.openhab = OpenHAB(self._rest_url, self._username, self._password)
+                    self.openhab = OpenHAB(self._rest_url, self._username, self._password, timeout=timeout)
                 else:
-                    self.openhab = OpenHAB(self._rest_url)
+                    self.openhab = OpenHAB(self._rest_url, timeout=timeout)
 
 
     # pylint: disable=R0913
