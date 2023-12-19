@@ -73,7 +73,7 @@ class OpenHABEntity(CoordinatorEntity):
         if self.item.type_ex in ['devireg_attr', 'devireg_attr_ui_sensor', 'devireg_attr_ui_binary_sensor', 'devireg_attr_ui_switch']:
             devi_unit = self.item.groupNames[0]
             return DeviceInfo(
-                identifiers   = {(f"{DOMAIN}.{devi_unit}")}
+                identifiers   = {(f"{DOMAIN}.{devi_unit}", self._host)}
             )
         else:
             return DeviceInfo(
