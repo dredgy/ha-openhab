@@ -86,7 +86,7 @@ If you want to contribute to this please read the [Contribution guidelines](CONT
 [buymecoffee]: https://www.buymeacoffee.com/kubawolanin
 [buymecoffeebadge]: https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg?style=for-the-badge
 [commits-shield]: https://img.shields.io/github/commit-activity/y/kubawolanin/ha-openhab.svg?style=for-the-badge
-[commits]: https://github.com/kubawolanin/ha-openhab/commits/master
+[commits]: https://github.com/bob-tm/ha-openhab/commits/master
 [hacs]: https://github.com/ludeeus/hacs
 [hacsbadge]: https://img.shields.io/badge/HACS-Custom-orange.svg?style=for-the-badge
 [discord]: https://discord.gg/Qa5fW2R
@@ -96,5 +96,5 @@ If you want to contribute to this please read the [Contribution guidelines](CONT
 [forum]: https://community.home-assistant.io/
 [license-shield]: https://img.shields.io/github/license/kubawolanin/ha-openhab.svg?style=for-the-badge
 [maintenance-shield]: https://img.shields.io/badge/maintainer-Kuba%20Wolanin%20%40kubawolanin-blue.svg?style=for-the-badge
-[releases-shield]: https://img.shields.io/github/release/kubawolanin/ha-openhab.svg?style=for-the-badge
-[releases]: https://github.com/kubawolanin/ha-openhab/releases
+[releases-shield]: https://img.shields.io/github/release/bob-tm/ha-openhab.svg?style=for-the-badge
+[releases]: https://github.com/bob-tm/ha-openhab/releases
