@@ -41,7 +41,7 @@ class OpenHABEntity(CoordinatorEntity):
         self._base_url = self.coordinator.api._base_url
         self._host = strip_ip(self._base_url)
         #self._nameid_prefix = f"{self._host}_"
-        self._nameid_prefix = f"devi_"
+        self._nameid_prefix = f"oh_"
 
         self.entity_id = f"{DOMAIN}.{self._nameid_prefix}{self.item.name}"
 
