@@ -7,7 +7,8 @@
   "requirements": [
     "zeroconf",
     "bs4",
-    "python-openhab"
+    "python-openhab",
+    "pydantic=2.5.3"
   ],
   "version": "0.2",
   "config_flow": true,
