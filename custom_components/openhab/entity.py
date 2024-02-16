@@ -118,6 +118,8 @@ class OpenHABEntity(CoordinatorEntity):
     @property
     def extra_state_attributes(self) -> dict[str, Any]:
         """Return the state attributes."""
+        return None
+        """ debug code """
         name = self.item.name
         label = self.item.label
         api_link = f"{self._base_url}/rest/items/{name}"
