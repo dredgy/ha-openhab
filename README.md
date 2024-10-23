@@ -1,6 +1,7 @@
-# Update #
-For DeviReg climate there is new way using Home Assistant Addon
+# 2024 Update #
+For DeviReg climate there is new Home Assistant Addon
 https://github.com/bob-tm/ha-devireg-mqtt-addon
+No more external servers!
 
 # openHAB custom integration for Home Assistant
 
