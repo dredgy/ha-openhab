@@ -1,6 +1,6 @@
 # Update #
 For DeviReg climate there is new way using Home Assistant Addon
-[bob-tm/devismart-openhab](https://github.com/bob-tm/ha-devireg-mqtt-addon)
+https://github.com/bob-tm/ha-devireg-mqtt-addon
 
 # openHAB custom integration for Home Assistant
 
