@@ -1,6 +1,7 @@
 """Sample API Client."""
 from __future__ import annotations
 
+import base64
 from typing import Any
 
 import os
@@ -9,6 +10,9 @@ import pathlib
 import json
 
 from .utils import strip_ip
+import aiohttp
+import base64
+import logging
 
 from openhab import (
     OpenHAB,
@@ -16,7 +20,7 @@ from openhab import (
 )
 
 from .const import CONF_AUTH_TYPE_BASIC, CONF_AUTH_TYPE_TOKEN
-from homeassistant.helpers.storage import STORAGE_DIR
+from homeassistant.helpers.storage import STORAGE_DIR, _LOGGER
 
 API_HEADERS = {aiohttp.hdrs.CONTENT_TYPE: "application/json; charset=UTF-8"}
 
@@ -171,6 +175,28 @@ def fetch_all_items(oh):
 
     return dict(sorted(dr.items()))
 
+async def async_get_item_image(self, item_name: str) -> bytes | None:
+    """Fetch image for a specific item."""
+    try:
+        # Fetch the full item details
+        url = f"{self.base_url}/rest/items/{item_name}"
+        async with self.session.get(url) as response:
+            if response.status == 200:
+                item_data = await response.json()
+                state = item_data.get('state', '')
+
+                # Check if it's a base64 image
+                if state.startswith('data:image'):
+                    # Split the data URL and decode the base64 part
+                    _, base64_image = state.split(',', 1)
+                    return base64.b64decode(base64_image)
+
+            _LOGGER.warning(f"Failed to fetch image for {item_name}: {response.status}")
+            return None
+    except Exception as err:
+        _LOGGER.error(f"Error fetching image for {item_name}: {err}")
+        return None
+
 class ApiClientException(Exception):
     """Api Client Exception."""
 
@@ -268,6 +294,35 @@ class OpenHABApiClient:
         runtime_info = info["runtimeInfo"]
         return f"{runtime_info['version']} {runtime_info['buildString']}"
 
+    async def async_get_item_image(self, item_name: str) -> bytes | None:
+        """Fetch image for a specific item."""
+        try:
+            # Construct the full URL to fetch the item
+            url = f"{self._rest_url}/items/{item_name}"
+
+            # Prepare headers
+            headers = {}
+            if self._auth_token:
+                headers['Authorization'] = f'Bearer {self._auth_token}'
+
+            # Use aiohttp to make the request
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url, headers=headers) as response:
+                    if response.status == 200:
+                        item_data = await response.json()
+                        state = item_data.get('state', '')
+
+                        # Check if it's a base64 image
+                        if state.startswith('data:image'):
+                            # Split the data URL and decode the base64 part
+                            _, base64_image = state.split(',', 1)
+                            return base64.b64decode(base64_image)
+
+                    _LOGGER.warning(f"Failed to fetch image for {item_name}: {response.status}")
+                    return None
+        except Exception as err:
+            _LOGGER.error(f"Error fetching image for {item_name}: {err}")
+            return None
 
     async def async_get_items(self) -> dict[str, Any]:
         """Get all items from the API."""

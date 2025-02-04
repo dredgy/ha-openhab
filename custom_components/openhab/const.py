@@ -8,8 +8,8 @@ DOMAIN = "openhab"
 DOMAIN_DATA = f"{DOMAIN}_data"
 VERSION = "0.0.1"
 ATTRIBUTION = "Data provided by openHAB REST API"
-ISSUE_URL = "https://github.com/kubawolanin/ha-openhab/issues"
-DATA_COORDINATOR_UPDATE_INTERVAL = timedelta(seconds=15)
+ISSUE_URL = "https://github.com/dredgy/ha-openhab/issues"
+DATA_COORDINATOR_UPDATE_INTERVAL = timedelta(seconds=1)
 LOGGER: Logger = getLogger(__package__)
 
 # Platforms
@@ -22,7 +22,8 @@ MEDIA_PLAYER = "media_player"
 SENSOR = "sensor"
 SWITCH = "switch"
 CLIMATE = "climate"
-PLATFORMS = [BINARY_SENSOR, COVER, DEVICE_TRACKER, LIGHT, MEDIA_PLAYER, SENSOR, SWITCH, CLIMATE]
+TEXT = "text"
+PLATFORMS = [BINARY_SENSOR, COVER, DEVICE_TRACKER, LIGHT, MEDIA_PLAYER, SWITCH, CLIMATE, TEXT, CAMERA]
 
 
 # Configuration and options
